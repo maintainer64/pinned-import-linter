@@ -1,0 +1,4 @@
+import only_package
+import only_package as real_any_type
+import only_package.real_any_type
+from only_package import package
