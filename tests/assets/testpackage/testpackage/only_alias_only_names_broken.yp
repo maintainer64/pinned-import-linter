@@ -1,0 +1,5 @@
+import only_alias_only_names
+import only_alias_only_names as real_any_type
+import only_alias_only_names as name_1
+import only_alias_only_names as name_2
+from only_alias_only_names import package

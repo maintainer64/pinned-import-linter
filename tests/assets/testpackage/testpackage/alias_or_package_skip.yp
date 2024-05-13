@@ -1,0 +1,3 @@
+import alias_or_package
+import alias_or_package as name_1
+import alias_or_package as name_2

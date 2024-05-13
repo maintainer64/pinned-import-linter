@@ -1,0 +1,45 @@
+---
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  pre-commit:
+    name: pre-commit check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+          allow-prereleases: true
+      - uses: pre-commit/action@v3.0.1
+        with:
+          extra_args: --all-files
+  tests:
+    name: tox on ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [ "3.8", "3.9", "3.10", "3.11", "3.12" ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+      - name: Install dependencies
+        run: |
+          python -VV
+          python -m site
+          python -m pip install --upgrade pip setuptools wheel pre-commit
+          python -m pip install --upgrade tox tox-gh-actions
+      - name: Run tox targets for ${{ matrix.python-version }}
+        run: python -m tox
