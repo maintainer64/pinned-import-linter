@@ -1,0 +1,7 @@
+-   id: lint-pinned-imports
+    name: lint-pinned-imports
+    description: Pinned Import Linter allows you to restricted also libraries your syntax import format.
+    entry: lint-pinned-imports
+    language: python
+    types: [python]
+    pass_filenames: false
