@@ -6,7 +6,7 @@ requires = [
 
 [project]
 name = "pinned-import-linter"
-version = "1.0"
+version = "1.0.1"
 description = "A plugin for python that will help you standardize imports from any libraries."
 license = { text = "MIT LICENSE" }
 authors = [

@@ -28,7 +28,7 @@ def test_skip_linter(
 ) -> None:
     checker_files_content_uc(
         configure_path=str(directory_custom_tox_file),
-        file_path_to_check=list(map(str, files_skip_linter)),
+        paths_to_check=list(map(str, files_skip_linter)),
     )
     mock_sys_exit.assert_called_with(EXIT_STATUS_SUCCESS)
     assert mock_std_error() == [""]
