@@ -66,9 +66,8 @@ repos:
     hooks:
       - id: lint-pinned-imports
         name: Restricted imports
-        entry: python -m src.pinnedimportlinter.cli --config tox.ini
+        entry: python -m src.pinnedimportlinter.cli --config tox.ini src test
         # Into your repository use
-        # entry: lint-pinned-imports --config tox.ini
+        # entry: lint-pinned-imports --config tox.ini .
         language: system
-        files: \.py$
-        pass_filenames: true
+        pass_filenames: false

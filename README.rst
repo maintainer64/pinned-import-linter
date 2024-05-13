@@ -57,6 +57,8 @@ with similar contents:
 
     [pinned_import_linter]
     package_names = typing,itertools,datetime,sys,pathlib
+    file_extensions = py,pyi
+    exclude = ^(venv|.venv)
 
     [pinned_import_linter.typing]
     allow_alias = true
@@ -112,7 +114,7 @@ the configuration can be imported in any way.
 Now, from your project root, run::
 
 
-    lint-pinned-imports --config tox.ini main.py
+    lint-pinned-imports --config tox.ini main.py your_folder .
 
 For a file with this configuration:
 
@@ -139,6 +141,22 @@ Connect all files on pre-commit
 1. Add package on dev-dependency in your project on Python
 2. Add step into your .pre-commit-config.yaml
 
+Check all files on directories:
+
+.. code-block:: yml
+
+    repos:
+      - repo: local
+        hooks:
+          - id: lint-pinned-imports
+            name: Restricted imports
+            entry: lint-pinned-imports --config tox.ini .
+            language: system
+            pass_filenames: false
+
+
+Alternative .pre-commit-config.yaml checked only changed files:
+
 .. code-block:: yml
 
     repos:
@@ -148,5 +166,4 @@ Connect all files on pre-commit
             name: Restricted imports
             entry: lint-pinned-imports --config tox.ini
             language: system
-            files: \.py$
-            pass_filenames: true
+            types: [ python ]

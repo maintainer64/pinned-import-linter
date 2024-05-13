@@ -59,7 +59,7 @@ def test_broken_linter(
 ) -> None:
     checker_files_content_uc(
         configure_path=str(directory_custom_tox_file),
-        file_path_to_check=list(map(str, files_broken_linter)),
+        paths_to_check=list(map(str, files_broken_linter)),
     )
     mock_sys_exit.assert_called_with(EXIT_STATUS_ERROR)
     assert mock_std_error() == output_broken_linter

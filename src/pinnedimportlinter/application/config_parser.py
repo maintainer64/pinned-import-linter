@@ -2,19 +2,22 @@ from __future__ import annotations
 
 import configparser
 import dataclasses
+import re
 import typing as t
 
 from ..domain.constant import CONFIG_BLOCK_NAME
 
 
-def _string_spit(string: str) -> t.List[str]:
+def _string_spit(string: str | list[str]) -> list[str]:
+    if isinstance(string, list):
+        return string
     return [name.strip() for name in string.split(",") if name.strip()]
 
 
 @dataclasses.dataclass
 class PackageNameSettingsBlock:
     allow_alias: bool
-    alias_names: t.Set[str]
+    alias_names: set[str]
     allow_from: bool
     allow_package: bool
 
@@ -48,9 +51,15 @@ class LinterConfig:
     )
 
     def __init__(
-        self, config_path: str, packages: dict[str, PackageNameSettingsBlock] | None = None
+        self,
+        config_path: str,
+        file_extensions: set[str] | None = None,
+        exclude: str | None = None,
+        packages: dict[str, PackageNameSettingsBlock] | None = None,
     ):
         self.config_path = config_path
+        self.file_extensions: set[str] = file_extensions or {"py"}
+        self.exclude: t.Pattern[str] | None = re.compile(exclude) if exclude else None
         self._packages = packages or {}
 
     def get(self, package_name: str | None) -> PackageNameSettingsBlock:
@@ -64,9 +73,14 @@ class LinterConfig:
         config.read(config_path)
         if CONFIG_BLOCK_NAME not in config:
             return cls(config_path=config_path)
-        package_names = _string_spit(config[CONFIG_BLOCK_NAME].get("package_names") or "")
+        main_block = config[CONFIG_BLOCK_NAME]
+        package_names = _string_spit(main_block.get("package_names") or "")
+        file_extensions = _string_spit(main_block.get("file_extensions") or "")
+        exclude = main_block.get("exclude", None)
         return cls(
             config_path=config_path,
+            file_extensions=set(file_extensions),
+            exclude=exclude,
             packages={
                 package_name: PackageNameSettingsBlock.from_dict(config[block_name])
                 for package_name in package_names
