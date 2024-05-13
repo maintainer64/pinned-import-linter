@@ -9,8 +9,8 @@ Pinned Import Linter
     :alt: Python versions
     :target: https://pypi.org/project/pinned-import-linter/
 
-.. image:: https://github.com/maintainer64/pinned-import-linter/workflows/CI/badge.svg?branch=main
-     :target: https://github.com/maintainer64/pinned-import-linter/actions?workflow=CI
+.. image:: https://github.com/maintainer64/pinned-import-linter/actions/workflows/main.yml/badge.svg?branch=main
+     :target: https://github.com/maintainer64/pinned-import-linter/actions/workflows/main.yml
      :alt: CI Status
 
 ⚡ A plugin for python that will help you standardize imports from any libraries.
